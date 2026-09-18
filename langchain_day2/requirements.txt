@@ -1,0 +1,25 @@
+python-dotenv>=1.0.0
+
+# IMPORTANT: pinned to the 0.3.x line deliberately. LangChain 1.x removed
+# the classic langchain.agents.create_react_agent / AgentExecutor API that
+# Assignment 1's Thought/Action/Observation trace is built on (replaced by
+# a LangGraph-based create_agent with a different, message-based shape).
+# Do not casually upgrade these without rewriting agent.py's agent
+# construction if you do.
+langchain>=0.3.0,<0.4.0
+langchain-core>=0.3.0,<0.4.0
+langchain-community>=0.3.0,<0.4.0
+langchain-text-splitters>=0.3.0,<0.4.0
+
+# Local model provider (default, per assignment's corporate-IT note)
+langchain-ollama>=0.2.0,<1.0.0
+
+# Optional providers -- only needed if you set LLM_PROVIDER=openai / google
+langchain-openai>=0.2.0,<1.0.0
+langchain-google-genai>=2.0.0,<3.0.0
+
+# Vector store (Assignment 3)
+faiss-cpu>=1.8.0
+
+# Search tool backend (Assignment 1) -- free, no API key
+wikipedia>=1.4.0
