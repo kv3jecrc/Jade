@@ -1,0 +1,5 @@
+The golden token is worth 50 points, more than any other token in the game.
+Players cannot cross the river without a bridge card in their hand.
+Each player starts with three action cards and draws one new card at the beginning of their turn.
+If a player rolls double sixes, they may immediately take an extra turn.
+The game ends when one player collects at least 200 points or all tokens have been claimed.
