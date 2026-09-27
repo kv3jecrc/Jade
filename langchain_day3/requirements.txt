@@ -1,0 +1,21 @@
+python-dotenv>=1.0.0
+
+# IMPORTANT: pinned to the 0.3.x line deliberately. LangChain 1.x removed
+# the classic langchain.agents.create_react_agent / AgentExecutor API that
+# Assignment 2's Thought/Action/Observation trace depends on.
+langchain>=0.3.0,<0.4.0
+langchain-core>=0.3.0,<0.4.0
+langchain-community>=0.3.0,<0.4.0
+langchain-text-splitters>=0.3.0,<0.4.0
+
+# Local model provider (default, per corporate-IT note). Assignment 1
+# additionally requires whichever Ollama model you pick to support
+# tool/function calling (e.g. llama3.1, llama3.2, qwen2.5).
+langchain-ollama>=0.2.0,<1.0.0
+
+# Optional providers -- only needed if you set LLM_PROVIDER=openai / google
+langchain-openai>=0.2.0,<1.0.0
+langchain-google-genai>=2.0.0,<3.0.0
+
+# Vector store (Assignment 3)
+faiss-cpu>=1.8.0
