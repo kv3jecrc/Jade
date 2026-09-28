@@ -1,0 +1,9 @@
+langchain>=0.3.0,<0.4.0
+langchain-core>=0.3.0,<0.4.0
+langchain-text-splitters>=0.3.0,<0.4.0
+langchain-ollama<1.0.0
+langchain-openai<1.0.0
+langchain-google-genai<3.0.0
+python-dotenv
+pypdf
+python-docx

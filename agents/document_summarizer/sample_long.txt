@@ -1,0 +1,193 @@
+Quarterly Business Review -- All Departments (2026 Q3)
+
+Section 1: Departmental Update
+
+This section covers department #1's quarterly performance. Headcount grew
+from 41 to 46 employees during the quarter. Revenue for this
+department was $1.35M, a change of -2% versus the
+prior quarter. The primary driver was project Delta-1, which shipped on
+April 11, 2026.
+
+Key risk identified: department #1 reported a staffing gap in its
+DevOps function, with an estimated
+3 open roles unfilled for more than 60 days.
+
+Action item: department #1's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 2: Departmental Update
+
+This section covers department #2's quarterly performance. Headcount grew
+from 42 to 47 employees during the quarter. Revenue for this
+department was $1.50M, a change of -1% versus the
+prior quarter. The primary driver was project Delta-2, which shipped on
+May 12, 2026.
+
+Key risk identified: department #2 reported a staffing gap in its
+Design function, with an estimated
+4 open roles unfilled for more than 60 days.
+
+Action item: department #2's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 3: Departmental Update
+
+This section covers department #3's quarterly performance. Headcount grew
+from 43 to 48 employees during the quarter. Revenue for this
+department was $1.65M, a change of 0% versus the
+prior quarter. The primary driver was project Delta-3, which shipped on
+June 13, 2026.
+
+Key risk identified: department #3 reported a staffing gap in its
+Data function, with an estimated
+2 open roles unfilled for more than 60 days.
+
+Action item: department #3's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 4: Departmental Update
+
+This section covers department #4's quarterly performance. Headcount grew
+from 44 to 49 employees during the quarter. Revenue for this
+department was $1.80M, a change of 1% versus the
+prior quarter. The primary driver was project Delta-4, which shipped on
+March 14, 2026.
+
+Key risk identified: department #4 reported a staffing gap in its
+QA function, with an estimated
+3 open roles unfilled for more than 60 days.
+
+Action item: department #4's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 5: Departmental Update
+
+This section covers department #5's quarterly performance. Headcount grew
+from 45 to 50 employees during the quarter. Revenue for this
+department was $1.95M, a change of 2% versus the
+prior quarter. The primary driver was project Delta-5, which shipped on
+April 15, 2026.
+
+Key risk identified: department #5 reported a staffing gap in its
+DevOps function, with an estimated
+4 open roles unfilled for more than 60 days.
+
+Action item: department #5's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 6: Departmental Update
+
+This section covers department #6's quarterly performance. Headcount grew
+from 46 to 51 employees during the quarter. Revenue for this
+department was $2.10M, a change of 3% versus the
+prior quarter. The primary driver was project Delta-6, which shipped on
+May 16, 2026.
+
+Key risk identified: department #6 reported a staffing gap in its
+Design function, with an estimated
+2 open roles unfilled for more than 60 days.
+
+Action item: department #6's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 7: Departmental Update
+
+This section covers department #7's quarterly performance. Headcount grew
+from 47 to 52 employees during the quarter. Revenue for this
+department was $2.25M, a change of 4% versus the
+prior quarter. The primary driver was project Delta-7, which shipped on
+June 17, 2026.
+
+Key risk identified: department #7 reported a staffing gap in its
+Data function, with an estimated
+3 open roles unfilled for more than 60 days.
+
+Action item: department #7's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 8: Departmental Update
+
+This section covers department #8's quarterly performance. Headcount grew
+from 48 to 53 employees during the quarter. Revenue for this
+department was $2.40M, a change of 5% versus the
+prior quarter. The primary driver was project Delta-8, which shipped on
+March 18, 2026.
+
+Key risk identified: department #8 reported a staffing gap in its
+QA function, with an estimated
+4 open roles unfilled for more than 60 days.
+
+Action item: department #8's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 9: Departmental Update
+
+This section covers department #9's quarterly performance. Headcount grew
+from 49 to 54 employees during the quarter. Revenue for this
+department was $2.55M, a change of 6% versus the
+prior quarter. The primary driver was project Delta-9, which shipped on
+April 19, 2026.
+
+Key risk identified: department #9 reported a staffing gap in its
+DevOps function, with an estimated
+2 open roles unfilled for more than 60 days.
+
+Action item: department #9's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 10: Departmental Update
+
+This section covers department #10's quarterly performance. Headcount grew
+from 50 to 55 employees during the quarter. Revenue for this
+department was $2.70M, a change of 7% versus the
+prior quarter. The primary driver was project Delta-10, which shipped on
+May 20, 2026.
+
+Key risk identified: department #10 reported a staffing gap in its
+Design function, with an estimated
+3 open roles unfilled for more than 60 days.
+
+Action item: department #10's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 11: Departmental Update
+
+This section covers department #11's quarterly performance. Headcount grew
+from 51 to 56 employees during the quarter. Revenue for this
+department was $2.85M, a change of 8% versus the
+prior quarter. The primary driver was project Delta-11, which shipped on
+June 21, 2026.
+
+Key risk identified: department #11 reported a staffing gap in its
+Data function, with an estimated
+4 open roles unfilled for more than 60 days.
+
+Action item: department #11's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
+
+Section 12: Departmental Update
+
+This section covers department #12's quarterly performance. Headcount grew
+from 52 to 57 employees during the quarter. Revenue for this
+department was $3.00M, a change of 9% versus the
+prior quarter. The primary driver was project Delta-12, which shipped on
+March 22, 2026.
+
+Key risk identified: department #12 reported a staffing gap in its
+QA function, with an estimated
+2 open roles unfilled for more than 60 days.
+
+Action item: department #12's lead committed to a hiring plan review by
+the end of next month, and to a follow-up staffing report shared with
+the leadership team.
