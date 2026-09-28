@@ -1,0 +1,43 @@
+Software Requirement Specification (SRS)
+Project: Campus Library Management System
+
+1. Overview
+The Campus Library Management System (CLMS) is a web-based application
+that allows students and staff to search the library catalog, borrow and
+return books, and allows librarians to manage inventory and fines. The
+system must support concurrent access from up to 2,000 users during peak
+enrollment periods.
+
+2. Functional Requirements
+- Users shall be able to search books by title, author, ISBN, or subject.
+- Registered users shall be able to reserve a book that is currently
+  checked out.
+- The system shall automatically calculate late fees at $0.50 per day,
+  capped at $20 per book.
+- Librarians shall be able to add, update, and remove book records,
+  including multiple copies of the same title.
+- The system shall send an email notification 2 days before a book's due
+  date.
+- Students shall be able to view their borrowing history and current
+  fines from a personal dashboard.
+
+3. Non-Functional Requirements
+- The system must respond to search queries within 2 seconds under
+  normal load.
+- The system must be available 99.5% of the time during the academic
+  term.
+- All user passwords must be stored using a strong, salted hash.
+- The system must support at least 2,000 concurrent users without
+  degraded performance.
+
+4. Constraints
+- The system must integrate with the university's existing Single
+  Sign-On (SSO) provider.
+- The initial release must launch before the start of the next academic
+  term, giving the development team roughly 10 weeks.
+
+5. Assumptions
+- The university's existing book inventory data can be exported as CSV
+  for a one-time migration.
+- Network infrastructure on campus is assumed to be reliable and is out
+  of scope for this project.
