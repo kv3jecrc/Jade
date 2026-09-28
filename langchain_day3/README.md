@@ -24,11 +24,10 @@ langchain_day3/
 
 ## ⚠️ Version pin
 
-Same note as prior assignments: `requirements.txt` pins `langchain` /
-`langchain-core` / `langchain-community` to **0.3.x** deliberately, since
-Assignment 2's classic `create_react_agent` + `AgentExecutor` API was
-removed in LangChain 1.x. Install from `requirements.txt`, not a bare
-`pip install langchain`.
+`requirements.txt` pins `langchain` / `langchain-core` / `langchain-community`
+to **0.3.x** deliberately, since Assignment 2's classic
+`create_react_agent` + `AgentExecutor` API was removed in LangChain 1.x.
+Install from `requirements.txt`, not a bare `pip install langchain`.
 
 ## Using a local model (per the corporate-IT note)
 
@@ -66,13 +65,13 @@ charging me" cancel test and the "$50 on TXN991" refund test) and prints
 which tool got selected, its arguments, its output, and a PASS/FAIL
 against the expected tool.
 
-**What I verified vs. what needs a real model**: I don't have a running
-Ollama instance, so I can't verify the LLM's *actual semantic reading* of
-the docstrings picks correctly — that's the real test this assignment is
-about, and it can only be judged with genuine model inference. What I did
-verify is the dispatch plumbing: given a scripted tool_call response, the
-code correctly extracts the tool name/args and invokes the matching
-Python function with them.
+**What I verified vs. what needs a real model**: I have no running Ollama
+instance in the environment I built this in, so I can't verify the LLM's
+*actual semantic reading* of the docstrings picks correctly — that's the
+real test this assignment is about, and it can only be judged with
+genuine model inference. What I did verify is the dispatch plumbing:
+given a scripted tool_call response, the code correctly extracts the tool
+name/args and invokes the matching Python function with them.
 
 ## Assignment 2 — Agent Resilience: The Broken API Challenge
 
@@ -104,42 +103,48 @@ functions — `get_internal_stock_price` genuinely always fails,
 
 `assignment_3_lost_context_detective/rag_pipeline.py`
 
-Splits `tricky_document` (embedded directly in the script, verbatim as
-given) with `RecursiveCharacterTextSplitter`, stores chunks in an
-in-memory FAISS store, and asks: *"What is the deadline and budget for
-Project Phoenix?"* — a question that requires connecting Section 1 (which
-names "Project Phoenix") with Section 9 (which has the deadline/budget
-but only calls it "the cloud restructure initiative mentioned earlier").
+Splits `tricky_document` (embedded directly in the script, byte-for-byte
+as given in the assignment) with `RecursiveCharacterTextSplitter`, stores
+chunks in an in-memory FAISS store, and asks: *"What is the deadline and
+budget for Project Phoenix?"* — a question that requires connecting
+Section 1 (which names "Project Phoenix") with Section 9 (which has the
+deadline/budget but only calls it "the cloud restructure initiative
+mentioned earlier").
 
 **Chosen parameters: `chunk_size=200`, `chunk_overlap=50`, retrieved with
-`k=3`.** These were not guessed — I measured the document first (every
-section is 137–217 characters) and empirically tested a bad config before
-settling on this one. The full reasoning, including exactly what the bad
-config breaks and why, is in the **mandatory multi-line comment at the
-bottom of `rag_pipeline.py`** (required by the assignment) — short
-version:
+`k=3`.** These were not guessed — I measured the document first (it's
+1,452 characters; Sections 1 and 9, the two that matter, are 168 and 167
+characters respectively) and empirically tested several configurations
+before settling on this one. The full reasoning, including exactly what
+a bad config breaks and why, is in the **mandatory `''' '''` comment at
+the bottom of `rag_pipeline.py`** — short version:
 
 - **Bad config** (`chunk_size=100, chunk_overlap=0`): verified this
-  actually splits Section 9 into three fragments, with the connecting
-  phrase `"cloud restructure initiative"` landing in a *different chunk*
-  than the deadline/budget numbers — I confirmed this directly by
-  printing the resulting chunks, not just reasoning about it abstractly.
+  actually splits Section 9 into *three* separate fragments, with the
+  connecting phrase `"cloud restructure initiative"` landing in a
+  different chunk than `"$500,000"` — confirmed by printing the actual
+  resulting chunks, not just reasoning about it abstractly. Also tested
+  `chunk_size=150`, which still splits Section 9 (167 chars barely
+  doesn't fit).
 - **Chosen config**: `chunk_size=200` is large enough to keep Section 1
   and Section 9 each intact as one unbroken chunk (verified the same
-  way), and `k=3` retrieval brings back both chunks together for this
-  query, since each one strongly matches different keywords in the
-  question ("Project Phoenix" vs. "deadline"/"budget"). The LLM then sees
-  both intact excerpts side by side and can infer the connection itself.
+  way — printed every chunk and confirmed both sections are whole), and
+  `k=3` retrieval brings back both chunks together for this query, since
+  each one strongly matches different keywords in the question ("Project
+  Phoenix" vs. "deadline"/"budget"). The LLM then sees both intact
+  excerpts side by side and can infer the connection itself.
 
 **What I verified vs. what needs real infrastructure**: I have no running
 Ollama instance in the environment I built this in, so `get_embeddings()`
 and `get_llm()` couldn't be exercised for real here. I verified the
-chunking behavior directly (real `RecursiveCharacterTextSplitter`, real
-document, no mocking needed) and verified the full retrieval→prompt→LLM
-pipeline wiring using a content-sensitive word-overlap embedding stand-in
-(not random noise) confirming both target chunks land in the top-3
-results, plus a scripted fake LLM confirming the final answer flows
-through correctly end to end. You'll want to run it for real against
-Ollama + `nomic-embed-text` to confirm actual embedding quality retrieves
-both chunks reliably — if it doesn't, try raising `RETRIEVAL_K` to 4 or 5
-first before changing chunk size.
+chunking behavior directly (real `RecursiveCharacterTextSplitter`, the
+exact document text, no mocking needed) and verified the full
+retrieval→prompt→LLM pipeline wiring using a content-sensitive
+word-overlap embedding stand-in (not random noise), confirming both
+target chunks land in the top-3 results for the exact required query,
+plus a scripted fake LLM confirming the final answer flows through
+correctly end to end and matches the required output format ("December
+31st, 2026, with a $500,000 budget"). You'll still want to run it for
+real against Ollama + `nomic-embed-text` to confirm actual embedding
+quality retrieves both chunks reliably — if it doesn't, try raising
+`RETRIEVAL_K` to 4 or 5 before changing chunk size.

@@ -14,7 +14,7 @@ python-dotenv -- no keys are hardcoded anywhere in this file.
     LLM_PROVIDER        "ollama" (default), "openai", or "google"
 
     # Ollama (local, no key required)
-    OLLAMA_MODEL          e.g. "llama3.2" or "llama3.1"          (default: "llama3.2")
+    OLLAMA_MODEL          e.g. "llama3.1" or "llama3.2"          (default: "llama3.2")
     OLLAMA_BASE_URL       e.g. "http://localhost:11434"           (default: that value)
     OLLAMA_EMBED_MODEL    e.g. "nomic-embed-text"                 (default: that value)
 
