@@ -1,0 +1,89 @@
+Id,Name,ShippingCountry,BillingCountry,Region__c,exp_ship,exp_bill,explained_by_billing
+0011W00001rP2a1QAC,ELC Beauty LLC - Procure,Mexico,Germany,NA,LATAM,EMEA,False
+0011W00001rjJ2sQAE,MOET HENNESSY - HR via SAP,France,Germany,NA,EMEA,EMEA,False
+0011W00001rk0TOQAY,"Super Micro Computer, Inc. - HR via SAP",Taiwan,Germany,NA,APAC,EMEA,False
+0011W00001vnQL8QAM,Avianca Holdings S.A.,Colombia,Colombia,NA,LATAM,LATAM,False
+0011W00001wJVbWQAW,Bank of America Merchant Services - Procure via SAP,Brazil,Germany,NA,LATAM,EMEA,False
+0011W00001zXXX6QAO,Marlabs Innovations Private Limited - HR via SAP,Brazil,Germany,APAC,LATAM,EMEA,False
+0011W000020T86GQAS,Vivaticket,France,France,NA,EMEA,EMEA,False
+0011W000020UnZPQA0,Vibracoustic GmbH via SoftwareOne,Germany,United Kingdom,NA,EMEA,EMEA,False
+0011W000020V1R0QAK,"American Airlines, Inc (HR) via SAP",Brazil,Germany,NA,LATAM,EMEA,False
+0011W000020cWJCQA2,ABInBev India Ltd via Softwareone via INGRAM MICRO INDIA PRIVATE LIMITED,Dominican Republic,United States,APAC,LATAM,NA,False
+0011W000023USL3QAO,EF Invest International AG,Japan,United States,EMEA,JPN,NA,False
+0011W000022snWgQAI,Hyteck Aroma Zone via ATN group via Ingram Micro France,France,Bulgaria,NA,EMEA,EMEA,False
+0011W00002J1kXQQAZ,Revolut via Diligent Corporation,Australia,United States,EMEA,APAC,NA,False
+0011W00002MtnojQAB,CRISIL via SoftwareOne,India,India,NA,APAC,APAC,False
+0011W00002ItGCDQA3,Eastern Caribbean Central Bank via SAP,Saint Kitts and Nevis,Germany,NA,LATAM,EMEA,False
+0011W000025wNPsQAM,"Water Works Board of the City Birmingham, AL via Veritas Prime LLC via SAP",Peru,Germany,NA,LATAM,EMEA,False
+0011W0000282gITQAY,"CUATRECASAS LEGAL, S.L.P. via Microsoft Azure Marketplace",Colombia,United States,EMEA,LATAM,NA,False
+0011W00002ItGCDQA3,Eastern Caribbean Central Bank via SAP,Saint Kitts and Nevis,Germany,NA,LATAM,EMEA,False
+0011W00002Pi1pJQAR,Brit Group Services via Ingram Micro CDW,United Kingdom,United Kingdom,NA,EMEA,EMEA,False
+0011W00002QBhfTQAT,"DAIWA LIFENEXT CO., LTD. via CTC",Japan,Japan,NA,JPN,JPN,False
+0011W00002QY9ibQAD,Tata Unistore via Innovius via Ingram,India,India,NA,APAC,APAC,False
+0011W00002Q04cbQAB,PETSUPERMARKET COMERCIO DE PRODUTOS PARA ANIMAIS LTDA,Brazil,Brazil,NA,LATAM,LATAM,False
+0011W00002QhGRvQAN,TE Connectivity Corporation - HR,Philippines,Germany,NA,APAC,EMEA,False
+0011W00002Qp66jQAB,Godrej Consumer Products Ltd via SAP,Brazil,Germany,APAC,LATAM,EMEA,False
+0011W00002RT9sdQAD,Apex,"Korea, Republic of",United Kingdom,LATAM,APAC,EMEA,False
+0011W00002RV0PvQAL,TOYOTA SYSTEMS CORPORATION via Hisol,Japan,Japan,NA,JPN,JPN,False
+0011W00002RbvTmQAJ,Bracell International Holdings Limited via Applicate via Ingram,Brazil,Malaysia,NA,LATAM,APAC,False
+0011W00002RbvU0QAJ,Warwick Profits Limited via Applicate via Ingram,Brazil,Malaysia,NA,LATAM,APAC,False
+0011W00002RbvUPQAZ,Asia Pacific Resources International Limited via Applicate via Ingram,Hong Kong,Malaysia,NA,APAC,APAC,False
+0011W00002RbvUUQAZ,Bracell Limited via Applicate via Ingram,Brazil,Malaysia,NA,LATAM,APAC,False
+0011W00002S0ItGQAV,My CMS,Netherlands,Netherlands,NA,EMEA,EMEA,False
+0011W00002STeqRQAT,"Maxeon Solar Technologies, Ltd via SAP",Mexico,Germany,APAC,LATAM,EMEA,False
+0011W00002SU6kHQAT,MJ Hudson via Diligent Corporation,Brazil,United States,EMEA,LATAM,NA,False
+0011W00002SU6ubQAD,My Surrogacy Journey via Engaged MD,Mexico,United States,EMEA,LATAM,NA,False
+0011W00002SU9J5QAL,HEART NSTA/Trust via Jamaica: SAP,Jamaica,Germany,NA,LATAM,EMEA,False
+0011W00002SyQ48QAF,CTMC,United States,United States,APAC,NA,NA,False
+0011W00002SytixQAB,"HITACHI ACADEMY CO., LTD. via HI-SOL",Japan,Japan,NA,JPN,JPN,False
+0011W00002SzT4lQAF,C.I. TAKIRON CORPORATION via CTC,Japan,Japan,NA,JPN,JPN,False
+0011W00002SzUmrQAF,"TOHO TITANIUM COMPANY,LIMITED. via HI-SOL",Japan,Japan,NA,JPN,JPN,False
+0011W00002SzeJWQAZ,"HITACHI KE SYSTEMS, LTD. via HI-SOL",Japan,Japan,NA,JPN,JPN,False
+0011W00002SzhYUQAZ,"CHUDEN PLANT CO.,LTD. via HI-SOL",Japan,Japan,NA,JPN,JPN,False
+0011W00002Szr0BQAR,"ITOCHU INDUSTRIAL GAS CO., LTD. via CTC",Japan,Japan,NA,JPN,JPN,False
+0011W00002TyhYjQAJ,Viavi Solutions Inc. via SAP,Brazil,Germany,NA,LATAM,EMEA,False
+0011W00002Ua5jMQAR,Ocean Network Express PTE LTD. via SAP,Singapore,Germany,LATAM,APAC,EMEA,False
+0011W00002VBscDQAT,"Provisional Account 8 via Shanghai FreeLink Information Technology (Hong Kong) Co., Limited - Reseller via Distributor Partner via Ingram Micro (HK) - Partner",Hong Kong,Hong Kong,EMEA,APAC,APAC,False
+0014000000WU826AAD,Texas Instruments Incorporated via SAP,Japan,Germany,NA,JPN,EMEA,False
+0014000000WU8sxAAD,Nucor Corporation via SAP,Trinidad and Tobago,Germany,NA,LATAM,EMEA,False
+0014000000WUg02AAD,Dana Limited via SAP,Hong Kong,Germany,NA,APAC,EMEA,False
+0014000000b0HmkAAE,Origio A/S,Brazil,United States,EMEA,LATAM,NA,False
+0014000000xIk2GAAS,Generac Power Systems - Procure via SAP,Mexico,Germany,NA,LATAM,EMEA,False
+0014000000xIrwwAAC,Parex Resources Inc via SAP,Brazil,Germany,NA,LATAM,EMEA,False
+0014000000xJDaTAAW,PUC Inc,Brazil,Germany,NA,LATAM,EMEA,False
+0014000000xiwdyAAA,Oatey Co.,Bangladesh,Germany,NA,APAC,EMEA,False
+0014000000xiwkuAAA,Ontario Power Generation Inc. via SAP,Mexico,Germany,NA,LATAM,EMEA,False
+0014000001ZW8LJAA1,Dubai Holding Group,United Arab Emirates,Germany,NA,EMEA,EMEA,False
+0014000001biruKAAQ,CSN-Companhia Siderúrgica Nacional | 33.042.730/0001-04 via SAP,Brazil,Germany,NA,LATAM,EMEA,False
+0014000001iFOHEAA4,Ineight Inc. - HR via SAP,Australia,Germany,NA,APAC,EMEA,False
+0014000001ihWyCAAU,Saficon Industrial Equipment Pty LTD via Apposite,South Africa,United Kingdom,NA,EMEA,EMEA,False
+0014000001r3C92AAE,United Lincolnshire hospitals trust (NHS) via Insight via Ingram Micro,United Kingdom,United Kingdom,NA,EMEA,EMEA,False
+0018Z00002XOtSSQA1,SCK-CEN (Belgian Nuclear Research Centre) via Fastman,Belgium,Netherlands,APAC,EMEA,EMEA,False
+0018Z00002XjGlEQAV,Hiberus Global IT Services S.L.,Spain,Spain,NA,EMEA,EMEA,False
+0018Z00002Y9ybpQAB,Bitkuber Investments Private Limited via Innovius via Technobind,India,India,NA,APAC,APAC,False
+0018Z00002anlBhQAI,IDA Ireland via Bluewave via QBS,United Kingdom,United Kingdom,NA,EMEA,EMEA,False
+0018Z00002gFnrQQAS,HSE - ICT Department via SoftwareOne,United States,United States,EMEA,NA,NA,False
+0018Z00002pYKOIQA4,Pinniped Research Center TEST - MICHAEL AGUIRRE TEST NOT REAL,United States,United States,EMEA,NA,NA,False
+0018Z00002rgnZ3QAI,Interoute Communications Limited via Diligent Corporation,India,United States,EMEA,APAC,NA,False
+0018Z00002vt2XVQAY,GLOBAL LOAN AGENCY SERVICES LIMITED via Diligent Corporation,Australia,United States,EMEA,APAC,NA,False
+0018Z00002vxY42QAE,LEAL NEXAVENU,Australia,Australia,EMEA,APAC,APAC,False
+0018Z00002yRCRUQA4,Wheels for Humanity,Ukraine,Ukraine,NA,EMEA,EMEA,False
+0018Z00002z0VIoQAM,ReLive Life Sciences Limited,Hong Kong,Hong Kong,NA,APAC,APAC,False
+0018Z00003B1q49QAB,ACCIONA CONSTRUCTION PHILIPPINES INC. via Fujifilm,Japan,Japan,APAC,JPN,JPN,False
+0018Z00003CCni1QAD,Blick Rothenberg Limited via Diligent Corporation,Mexico,United States,EMEA,LATAM,NA,False
+0018Z00003EBpLAQA1,Dhahran Expo via COMM IT via Aptec (Saudi Arabia),Saudi Arabia,Saudi Arabia,NA,EMEA,EMEA,False
+0018Z00003EBpNGQA1,株式会社玉川製作所,Japan,Japan,NA,JPN,JPN,False
+0018Z00003Fe1NWQAZ,SQM Industrial S.A. via SAP,Singapore,Germany,LATAM,APAC,EMEA,False
+0018Z00003H1pkUQAR,Charles Taylor InsureTech Limited via Diligent Corporation,Singapore,United States,EMEA,APAC,NA,False
+0018Z00003HURPZQA5,TDC Group of Companies,Slovakia,United States,LATAM,EMEA,NA,False
+0018Z00003HiBvQQAV,"Expeditors International of Washington, Inc. via SAP",Philippines,Germany,NA,APAC,EMEA,False
+001Ub00000PQRsbIAH,River Valley Property Management via Ingram Micro,Philippines,Hong Kong,NA,APAC,APAC,False
+001Ub00000XVGrvIAH,"ITOCHU ENEX HOMELIFE CO.,Ltd. via CTC",Japan,Japan,NA,JPN,JPN,False
+001Ub00000a8WVsIAM,Sompo Japan Insurance Inc./EU Advanced via HI-SOL,Japan,Japan,NA,JPN,JPN,False
+001Ub00000c5p2SIAQ,Howden US(B39999-P9999),United Kingdom,United Kingdom,NA,EMEA,EMEA,False
+001Ub00000cGvpHIAS,"TAIWAN NISHIMATSUYA CO., LTD. via HI-SOL",Taiwan,Japan,NA,APAC,JPN,False
+001Ub00000f1UXeIAM,"FLCS Co., Ltd. via CTC",Japan,Japan,NA,JPN,JPN,False
+001Ub00000mauY1IAI,S.A.S STAND WITH FOUNDERS,France,France,NA,EMEA,EMEA,False
+001Ub00000q6oFWIAY,*New Times Huiting Hong Kong Limited via Freelink via Crayon SG,Hong Kong,Singapore,EMEA,APAC,APAC,False
+001Ub00000qiow6IAA,"NTT, Inc via CTC",Japan,Japan,NA,JPN,JPN,False
+001Ub00000rcOE8IAM,Forlex LTDA - ISV Embed,Brazil,Brazil,NA,LATAM,LATAM,False
