@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sprint Report Generator</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f0f2f7;
+  min-height: 100vh;
+  color: #1a2233;
+}
+
+.app {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.app-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px;
+}
+.app-logo {
+  width: 46px; height: 46px;
+  background: #0b224e; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.app-title h1 { font-size: 22px; font-weight: 700; color: #0b224e; }
+.app-title p  { font-size: 13px; color: #7a8599; margin-top: 3px; }
+
+/* ── Steps ──────────────────────────────────────────────── */
+.steps { display: flex; flex-direction: column; }
+
+.step { display: flex; gap: 20px; position: relative; }
+.step:not(:last-child)::before {
+  content: ''; position: absolute;
+  left: 19px; top: 44px; bottom: 0;
+  width: 2px; background: #dde2ef; z-index: 0;
+}
+
+.step-number {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #fff; border: 2px solid #dde2ef;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #9aa3b5;
+  flex-shrink: 0; position: relative; z-index: 1;
+  margin-top: 2px; transition: all .25s;
+}
+.step.active .step-number { background: #0b224e; border-color: #0b224e; color: #fff; }
+.step.done   .step-number { background: #27ae60; border-color: #27ae60; color: #fff; }
+.step.done   .step-number .num { display: none; }
+.step.done   .step-number::after { content: '✓'; font-size: 16px; }
+
+.step-body { flex: 1; padding-bottom: 32px; }
+
+.step-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: #9aa3b5; margin-bottom: 4px; margin-top: 10px;
+}
+.step.active .step-label { color: #0b224e; }
+
+.step-title { font-size: 17px; font-weight: 600; color: #1a2233; margin-bottom: 16px; }
+.step:not(.active):not(.done) .step-title { color: #9aa3b5; }
+
+/* ── Sheet ID input area ────────────────────────────────── */
+.sheet-id-box {
+  background: #fff;
+  border: 1.5px solid #dde2ef;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.sheet-id-row {
+  display: flex; gap: 10px; align-items: flex-end;
+}
+.sheet-id-row .field { flex: 1; margin-bottom: 0; }
+.sheet-id-status {
+  margin-top: 10px; font-size: 13px; display: none;
+  align-items: center; gap: 8px;
+}
+.sheet-id-status.visible { display: flex; }
+.sheet-id-status.ok    { color: #27ae60; }
+.sheet-id-status.error { color: #e74c3c; }
+.sheet-name-badge {
+  display: inline-block; background: #f0fff6; color: #1a7a45;
+  border: 1px solid #b7eacb; border-radius: 6px;
+  padding: 3px 10px; font-size: 12px; font-weight: 600;
+}
+
+/* ── Form controls ──────────────────────────────────────── */
+.field { margin-bottom: 14px; }
+.field label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: #5a6377; margin-bottom: 6px;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+
+select {
+  width: 100%; padding: 10px 36px 10px 14px;
+  border: 1.5px solid #dde2ef; border-radius: 8px;
+  font-size: 14px; color: #1a2233; background: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath stroke='%239aa3b5' stroke-width='1.5' fill='none' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+  cursor: pointer; transition: border-color .2s;
+}
+select:focus { outline: none; border-color: #0b224e; }
+select:disabled { background-color: #f8f9fc; color: #9aa3b5; cursor: default; }
+
+.input-row { display: flex; gap: 12px; }
+.input-row .field { flex: 1; margin-bottom: 0; }
+
+input[type="number"], input[type="text"] {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid #dde2ef; border-radius: 8px;
+  font-size: 14px; color: #1a2233; background: #fff;
+  transition: border-color .2s;
+}
+input:focus { outline: none; border-color: #0b224e; }
+input::placeholder { color: #b0b8cc; }
+
+/* ── Toggle switch ──────────────────────────────────────── */
+.toggle-row {
+  display: flex; align-items: center; gap: 14px;
+  background: #fff; border: 1.5px solid #dde2ef; border-radius: 10px;
+  padding: 12px 16px; margin-bottom: 14px; cursor: pointer;
+  transition: border-color .2s;
+}
+.toggle-row:hover { border-color: #0b224e; }
+.toggle { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle .slider {
+  position: absolute; inset: 0; background: #cfd5e3;
+  border-radius: 24px; transition: background .2s;
+}
+.toggle .slider::before {
+  content: ''; position: absolute; width: 18px; height: 18px;
+  left: 3px; top: 3px; background: #fff; border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s;
+}
+.toggle input:checked + .slider { background: #27ae60; }
+.toggle input:checked + .slider::before { transform: translateX(18px); }
+.toggle input:focus-visible + .slider { outline: 2px solid #0b224e; outline-offset: 2px; }
+.toggle-text { display: flex; flex-direction: column; font-size: 14px; font-weight: 600; color: #1a2233; }
+.toggle-text small { font-size: 12px; font-weight: 400; color: #7a8599; margin-top: 2px; }
+
+/* ── Chip grids ─────────────────────────────────────────── */
+.chip-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.chip-bar-label {
+  font-size: 12px; font-weight: 600; color: #5a6377;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.chip-action-btn {
+  font-size: 12px; color: #0b224e; font-weight: 600;
+  background: none; border: none; cursor: pointer;
+  text-decoration: underline; padding: 0;
+}
+
+.chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border: 1.5px solid #dde2ef;
+  border-radius: 20px; font-size: 13px; font-weight: 500;
+  color: #5a6377; background: #fff; cursor: pointer;
+  transition: all .18s; user-select: none;
+}
+.chip:hover                  { border-color: #0b224e; color: #0b224e; }
+.chip.selected               { background: #0b224e; border-color: #0b224e; color: #fff; }
+.chip.assignee.selected      { background: #1a56db; border-color: #1a56db; }
+.chip.assignee:hover:not(.selected) { border-color: #1a56db; color: #1a56db; }
+.chip .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .55; }
+
+.empty-hint { font-size: 13px; color: #9aa3b5; padding: 4px 0; }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 22px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  border: none; transition: all .2s;
+}
+.btn-primary             { background: #0b224e; color: #fff; }
+.btn-primary:hover       { background: #0d2d68; }
+.btn-primary:disabled    { background: #b0b8cc; cursor: not-allowed; }
+.btn-secondary           { background: #fff; color: #0b224e; border: 1.5px solid #dde2ef; }
+.btn-secondary:hover     { border-color: #0b224e; }
+.btn-sm {
+  padding: 8px 16px; font-size: 13px; font-weight: 600;
+  border-radius: 7px; cursor: pointer; border: none;
+  background: #0b224e; color: #fff; transition: background .2s;
+}
+.btn-sm:hover { background: #0d2d68; }
+
+/* ── Loader ─────────────────────────────────────────────── */
+.loader { display: none; align-items: center; gap: 10px; font-size: 13px; color: #5a6377; padding: 6px 0; }
+.loader.visible { display: flex; }
+.spinner {
+  width: 18px; height: 18px; border: 2px solid #dde2ef;
+  border-top-color: #0b224e; border-radius: 50%;
+  animation: spin .7s linear infinite; flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Banners ────────────────────────────────────────────── */
+.banner { display:none; padding:12px 16px; border-radius:8px; font-size:13px; margin-bottom:14px; border-left:4px solid; }
+.banner.visible { display: block; }
+.banner.error   { background:#fff0f0; border-color:#e74c3c; color:#c0392b; }
+.banner.success { background:#f0fff6; border-color:#27ae60; color:#1a7a45; }
+.banner.warning { background:#fff8e6; border-color:#f1c40f; color:#856404; }
+.banner.warning ul { margin: 6px 0 0 18px; }
+
+/* ── Selection pills ────────────────────────────────────── */
+.sel-summary { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+.pill {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:12px; font-size:12px; font-weight:500;
+}
+.pill.sheet   { background:#e8f0fe; color:#1a56db; }
+.pill.sprint  { background:#fef3e2; color:#b45309; }
+.pill.teams   { background:#f0fff6; color:#1a7a45; }
+.pill.members { background:#f3eeff; color:#6b21a8; }
+.pill.rtb     { background:#e0f2fe; color:#0369a1; }
+.pill.backlog { background:#f5eefc; color:#7d3c98; }
+
+/* ── Result card ────────────────────────────────────────── */
+.result-card { display:none; background:#fff; border-radius:12px; border:1.5px solid #dde2ef; padding:24px; margin-top:8px; }
+.result-card.visible { display:block; }
+.result-card h3 { font-size:16px; font-weight:700; color:#0b224e; margin-bottom:4px; }
+.result-card p  { font-size:13px; color:#7a8599; margin-bottom:18px; }
+
+.result-links { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.result-link {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600;
+  text-decoration:none; transition:all .2s; cursor:pointer; border:none;
+}
+.result-link.doc  { background:#e8f0fe; color:#1a56db; }
+.result-link.doc:hover  { background:#d0e3fd; }
+.result-link.html { background:#27ae60; color:#fff; }
+.result-link.html:hover { background:#219a55; }
+.result-link.preview { background:#f3f5f8; color:#1a2233; border:1.5px solid #dde2ef; }
+.result-link.preview:hover { border-color:#0b224e; }
+
+/* ── Per-team report rows ──────────────────────────────────── */
+.team-report-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; padding:12px 14px; border:1.5px solid #dde2ef; border-radius:8px;
+  margin-bottom:8px; flex-wrap:wrap;
+}
+.team-report-row .team-name { font-size:13px; font-weight:700; color:#0b224e; flex:1; min-width:120px; }
+.team-report-row .result-link { padding:7px 14px; font-size:12px; }
+
+/* ── Preview panel ──────────────────────────────────────── */
+.preview-panel { display:none; margin-top:16px; border:1.5px solid #dde2ef; border-radius:10px; overflow:hidden; }
+.preview-panel.visible { display:block; }
+.preview-panel iframe { width:100%; height:650px; border:none; display:block; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="app-header">
+    <div class="app-logo">📊</div>
+    <div class="app-title">
+      <h1>Sprint Report Generator</h1>
+      <p>Docusign · RTB Salesforce</p>
+    </div>
+  </div>
+
+  <div id="globalError" class="banner error"></div>
+
+  <div class="steps">
+
+    <!-- ══ STEP 1: Spreadsheet ══════════════════════════════ -->
+    <div class="step active" id="step1">
+      <div class="step-number"><span class="num">1</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 1</div>
+        <div class="step-title">Choose a spreadsheet</div>
+
+        <div class="sheet-id-box">
+          <p style="font-size:13px;color:#5a6377;margin-bottom:12px;">
+            Leave blank to use the spreadsheet this script is attached to, or paste a Google Sheet ID to use any other sheet.
+          </p>
+          <div class="sheet-id-row">
+            <div class="field">
+              <label>Google Sheet ID <span style="font-weight:400;color:#9aa3b5;">(optional)</span></label>
+              <input type="text" id="sheetIdInput" placeholder="e.g. 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms"/>
+            </div>
+            <button class="btn-sm" onclick="loadSpreadsheet()">Load</button>
+          </div>
+          <div class="sheet-id-status" id="sheetIdStatus"></div>
+        </div>
+
+        <div class="loader" id="ssLoader"><div class="spinner"></div> Loading spreadsheet…</div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 2: Sheet tab ════════════════════════════════ -->
+    <div class="step" id="step2">
+      <div class="step-number"><span class="num">2</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 2</div>
+        <div class="step-title">Select a sheet tab</div>
+        <div class="field">
+          <label>Sheet tab</label>
+          <select id="sheetSelect" onchange="onSheetChange()" disabled>
+            <option value="">— load a spreadsheet first —</option>
+          </select>
+        </div>
+        <div class="loader" id="sheetLoader"><div class="spinner"></div> Loading sheet data…</div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 3: Sprint ════════════════════════════════════ -->
+    <div class="step" id="step3">
+      <div class="step-number"><span class="num">3</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 3</div>
+        <div class="step-title">Select a sprint</div>
+        <div class="field">
+          <label>Sprint</label>
+          <select id="sprintSelect" onchange="onSprintChange()" disabled>
+            <option value="">— select a sheet tab first —</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 4: Teams ════════════════════════════════════ -->
+    <div class="step" id="step4">
+      <div class="step-number"><span class="num">4</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 4</div>
+        <div class="step-title">Select teams</div>
+        <div class="chip-bar">
+          <span class="chip-bar-label">Teams</span>
+          <button class="chip-action-btn" id="teamToggleBtn" onclick="toggleAllTeams()">Select all</button>
+        </div>
+        <div class="chip-grid" id="teamGrid">
+          <span class="empty-hint">Select a sprint first</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 5: RTB Capacity ══════════════════════════════ -->
+    <div class="step" id="step5">
+      <div class="step-number"><span class="num">5</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 5 <span style="font-weight:400;color:#9aa3b5;">(optional)</span></div>
+        <div class="step-title">Enter RTB Capacity</div>
+        <div class="input-row">
+          <div class="field">
+            <label>Planned Capacity</label>
+            <input type="number" id="rtbPlanned" placeholder="e.g. 40" min="0" oninput="onCapacityChange()"/>
+          </div>
+          <div class="field">
+            <label>Actual Capacity</label>
+            <input type="number" id="rtbActual" placeholder="e.g. 36" min="0" oninput="onCapacityChange()"/>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#9aa3b5;">Leave blank to show N/A in the report.</p>
+        <div style="margin-top:14px;">
+          <button class="btn-sm" onclick="confirmCapacity()">Confirm &amp; Continue →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 6: Team members ══════════════════════════════ -->
+    <div class="step" id="step6">
+      <div class="step-number"><span class="num">6</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 6</div>
+        <div class="step-title">Filter team members</div>
+        <p style="font-size:13px;color:#7a8599;margin-bottom:14px;">
+          All members selected by default. Deselect anyone to exclude their tickets from all calculations.
+        </p>
+        <div class="loader" id="membersLoader"><div class="spinner"></div> Loading members…</div>
+        <div id="membersChipBar" class="chip-bar" style="display:none;">
+          <span class="chip-bar-label">Members</span>
+          <button class="chip-action-btn" id="memberToggleBtn" onclick="toggleAllMembers()">Deselect all</button>
+        </div>
+        <div class="chip-grid" id="memberGrid">
+          <span class="empty-hint">Select teams first</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 7: Generate ══════════════════════════════════ -->
+    <div class="step" id="step7">
+      <div class="step-number"><span class="num">7</span></div>
+      <div class="step-body">
+        <div class="step-label">Step 7</div>
+        <div class="step-title">Generate report</div>
+
+        <label class="toggle-row" for="backlogToggle">
+          <span class="toggle">
+            <input type="checkbox" id="backlogToggle" onchange="onBacklogToggle()"/>
+            <span class="slider"></span>
+          </span>
+          <span class="toggle-text">
+            Include Backlog &amp; Grooming section
+            <small>Pulls live backlog and groomed ticket counts from Jira for each selected team</small>
+          </span>
+        </label>
+
+        <div id="selSummary" class="sel-summary" style="display:none;"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" id="generateBtn" onclick="doGenerate()" disabled>
+            ⚡ Generate Report
+          </button>
+          <button class="btn btn-secondary" onclick="resetAll()">↺ Start over</button>
+        </div>
+
+        <div class="loader" id="genLoader"><div class="spinner"></div> <span id="genLoaderText">Building report and saving to Drive…</span></div>
+        <div id="genError" class="banner error"></div>
+        <div id="genWarning" class="banner warning"></div>
+
+        <!-- Result card -->
+        <div class="result-card" id="resultCard">
+          <h3>✅ Report ready!</h3>
+          <p id="resultMeta"></p>
+          <div id="teamReportList"></div>
+          <div class="result-links">
+            <button class="result-link preview" onclick="togglePreview(this)">👁 Preview combined report</button>
+          </div>
+          <div class="preview-panel" id="previewPanel">
+            <iframe id="previewFrame" sandbox="allow-same-origin allow-scripts"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+</div><!-- /app -->
+
+<script>
+var S = {
+  spreadsheetId: '',
+  sheetName: '',
+  sprint: '',
+  teams: [], allTeams: [],
+  assignees: [], allAssignees: [],
+  rtbPlanned: '', rtbActual: '',
+  includeBacklog: false,
+  reportHtml: '',
+  htmlUrl: '',
+  docUrl: ''
+};
+
+// ── STEP 1: Load spreadsheet ────────────────────────────────
+function loadSpreadsheet() {
+  var id = document.getElementById('sheetIdInput').value.trim();
+  S.spreadsheetId = id;
+  resetFrom(2);
+  setStatus('', '');
+  loader('ssLoader', true);
+  hideErr('globalError');
+
+  google.script.run
+    .withSuccessHandler(function(res) {
+      loader('ssLoader', false);
+      if (res.error) { setStatus('error', '✗ ' + res.error); return; }
+
+      setStatus('ok', '✓ Connected to: <span class="sheet-name-badge">' + esc(res.title) + '</span>');
+
+      var sel = document.getElementById('sheetSelect');
+      sel.innerHTML = '<option value="">— choose a sheet tab —</option>';
+      res.sheets.forEach(function(n) {
+        var o = document.createElement('option'); o.value = o.textContent = n; sel.appendChild(o);
+      });
+      sel.disabled = false;
+      markDone(1); setActive(2);
+    })
+    .withFailureHandler(function(e) {
+      loader('ssLoader', false);
+      setStatus('error', '✗ ' + (e.message || String(e)));
+    })
+    .validateSheetId(id);
+}
+
+// Allow pressing Enter in the Sheet ID field
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('sheetIdInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') loadSpreadsheet();
+  });
+  // Auto-load active spreadsheet on startup
+  loadSpreadsheet();
+});
+
+function setStatus(type, html) {
+  var el = document.getElementById('sheetIdStatus');
+  el.className = 'sheet-id-status' + (type ? ' visible ' + type : '');
+  el.innerHTML = html;
+}
+
+// ── STEP 2: Sheet tab selected ──────────────────────────────
+function onSheetChange() {
+  var name = document.getElementById('sheetSelect').value;
+  if (!name) return;
+  S.sheetName = name;
+  resetFrom(3);
+  loader('sheetLoader', true);
+
+  google.script.run
+    .withSuccessHandler(function(meta) {
+      loader('sheetLoader', false);
+      if (meta.error) { showErr('globalError', meta.error); return; }
+
+      var sel = document.getElementById('sprintSelect');
+      sel.innerHTML = '<option value="">— choose a sprint —</option>';
+      meta.sprints.forEach(function(s) {
+        var o = document.createElement('option'); o.value = o.textContent = s; sel.appendChild(o);
+      });
+      sel.disabled = false;
+      S.allTeams     = meta.teams;
+      S.allAssignees = meta.assignees;
+      markDone(2); setActive(3);
+    })
+    .withFailureHandler(function(e) {
+      loader('sheetLoader', false);
+      showErr('globalError', e.message || String(e));
+    })
+    .getSheetMeta(S.spreadsheetId, name);
+}
+
+// ── STEP 3: Sprint selected ─────────────────────────────────
+function onSprintChange() {
+  var sprint = document.getElementById('sprintSelect').value;
+  if (!sprint) return;
+  S.sprint = sprint;
+  S.teams = [];
+  resetFrom(4);
+
+  var grid = document.getElementById('teamGrid');
+  grid.innerHTML = '';
+  S.allTeams.forEach(function(t) {
+    grid.appendChild(makeChip(t, 'team', toggleTeam));
+  });
+  document.getElementById('teamToggleBtn').textContent = 'Select all';
+  markDone(3); setActive(4);
+  refreshSummary();
+}
+
+// ── STEP 4: Teams ───────────────────────────────────────────
+function toggleTeam(name, el) {
+  toggleItem(name, el, S.teams);
+  document.getElementById('teamToggleBtn').textContent =
+    S.teams.length === S.allTeams.length ? 'Deselect all' : 'Select all';
+  if (S.teams.length > 0) { markDone(4); setActive(5); }
+  else                    { unDone(4);   setActive(4); clearMembers(); }
+  refreshSummary();
+}
+
+function toggleAllTeams() {
+  var chips = document.querySelectorAll('#teamGrid .chip');
+  var allSel = S.teams.length === S.allTeams.length;
+  if (allSel) {
+    S.teams = [];
+    chips.forEach(function(c) { c.classList.remove('selected'); });
+    unDone(4); setActive(4); clearMembers();
+  } else {
+    S.teams = S.allTeams.slice();
+    chips.forEach(function(c) { c.classList.add('selected'); });
+    markDone(4); setActive(5);
+  }
+  document.getElementById('teamToggleBtn').textContent = allSel ? 'Select all' : 'Deselect all';
+  refreshSummary();
+}
+
+// ── STEP 5: RTB Capacity ────────────────────────────────────
+function onCapacityChange() {
+  S.rtbPlanned = document.getElementById('rtbPlanned').value.trim();
+  S.rtbActual  = document.getElementById('rtbActual').value.trim();
+  refreshSummary();
+}
+
+function confirmCapacity() {
+  S.rtbPlanned = document.getElementById('rtbPlanned').value.trim();
+  S.rtbActual  = document.getElementById('rtbActual').value.trim();
+  markDone(5); setActive(6);
+  loadMembers();
+  refreshSummary();
+}
+
+// ── STEP 6: Members ─────────────────────────────────────────
+function loadMembers() {
+  if (!S.teams.length) return;
+  loader('membersLoader', true);
+  document.getElementById('memberGrid').innerHTML = '';
+  document.getElementById('membersChipBar').style.display = 'none';
+
+  google.script.run
+    .withSuccessHandler(function(res) {
+      loader('membersLoader', false);
+      if (res.error || !res.assignees) return;
+
+      S.allAssignees = res.assignees;
+      S.assignees    = res.assignees.slice(); // all selected by default
+
+      var grid = document.getElementById('memberGrid');
+      grid.innerHTML = '';
+      S.allAssignees.forEach(function(a) {
+        var chip = makeChip(a, 'assignee', toggleMember);
+        chip.classList.add('selected');
+        grid.appendChild(chip);
+      });
+
+      document.getElementById('membersChipBar').style.display = 'flex';
+      document.getElementById('memberToggleBtn').textContent = 'Deselect all';
+      markDone(6); setActive(7);
+      refreshSummary();
+    })
+    .withFailureHandler(function(e) {
+      loader('membersLoader', false);
+    })
+    .getAssigneesForSelection(S.spreadsheetId, S.sheetName, S.sprint, S.teams);
+}
+
+function toggleMember(name, el) {
+  toggleItem(name, el, S.assignees);
+  document.getElementById('memberToggleBtn').textContent =
+    S.assignees.length === S.allAssignees.length ? 'Deselect all' : 'Select all';
+  refreshSummary();
+  checkReady();
+}
+
+function toggleAllMembers() {
+  var chips = document.querySelectorAll('#memberGrid .chip');
+  var allSel = S.assignees.length === S.allAssignees.length;
+  if (allSel) {
+    S.assignees = [];
+    chips.forEach(function(c) { c.classList.remove('selected'); });
+  } else {
+    S.assignees = S.allAssignees.slice();
+    chips.forEach(function(c) { c.classList.add('selected'); });
+  }
+  document.getElementById('memberToggleBtn').textContent = allSel ? 'Select all' : 'Deselect all';
+  refreshSummary();
+  checkReady();
+}
+
+function clearMembers() {
+  document.getElementById('memberGrid').innerHTML = '<span class="empty-hint">Select teams first</span>';
+  document.getElementById('membersChipBar').style.display = 'none';
+  S.assignees = []; S.allAssignees = [];
+  unDone(6); setInactive(7);
+}
+
+// ── STEP 7: Generate ────────────────────────────────────────
+function onBacklogToggle() {
+  S.includeBacklog = document.getElementById('backlogToggle').checked;
+  refreshSummary();
+}
+
+function checkReady() {
+  var ok = S.sheetName && S.sprint && S.teams.length > 0 && S.assignees.length > 0;
+  document.getElementById('generateBtn').disabled = !ok;
+}
+
+function refreshSummary() {
+  checkReady();
+  var el = document.getElementById('selSummary');
+  var ok = S.sheetName && S.sprint && S.teams.length > 0;
+  if (!ok) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  var html = '<span class="pill sheet">📄 ' + esc(S.sheetName) + '</span>'
+           + '<span class="pill sprint">🏃 ' + esc(S.sprint) + '</span>'
+           + '<span class="pill teams">👥 ' + S.teams.length + ' team' + (S.teams.length > 1 ? 's' : '') + '</span>';
+  if (S.assignees.length)
+    html += '<span class="pill members">👤 ' + S.assignees.length + ' / ' + S.allAssignees.length + ' members</span>';
+  if (S.rtbPlanned || S.rtbActual)
+    html += '<span class="pill rtb">📊 RTB ' + (S.rtbPlanned || '—') + ' / ' + (S.rtbActual || '—') + '</span>';
+  if (S.includeBacklog)
+    html += '<span class="pill backlog">🗂️ Backlog section on</span>';
+  el.innerHTML = html;
+}
+
+function doGenerate() {
+  document.getElementById('genLoaderText').textContent = S.includeBacklog
+    ? 'Querying Jira, building report and saving to Drive…'
+    : 'Building report and saving to Drive…';
+  loader('genLoader', true);
+  hideErr('genError');
+  hideErr('genWarning');
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('generateBtn').disabled = true;
+
+  google.script.run
+    .withSuccessHandler(onReportDone)
+    .withFailureHandler(function(e) {
+      loader('genLoader', false);
+      showErr('genError', e.message || 'An unknown error occurred.');
+      document.getElementById('generateBtn').disabled = false;
+    })
+    .generateReport({
+      spreadsheetId:     S.spreadsheetId,
+      sheetName:         S.sheetName,
+      sprintName:        S.sprint,
+      selectedTeams:     S.teams,
+      rtbPlanned:        S.rtbPlanned,
+      rtbActual:         S.rtbActual,
+      selectedAssignees: S.assignees,
+      includeBacklog:    S.includeBacklog
+    });
+}
+
+function onReportDone(result) {
+  loader('genLoader', false);
+  document.getElementById('generateBtn').disabled = false;
+
+  if (result.error && !result.html) {
+    showErr('genError', result.error); return;
+  }
+
+  // Jira problems don't block the report — show them as a warning
+  if (result.warnings && result.warnings.length) {
+    var w = document.getElementById('genWarning');
+    w.innerHTML = '⚠️ Backlog data could not be loaded for some teams (the section shows "unavailable" for them):'
+                + '<ul>' + result.warnings.map(function(m){ return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>';
+    w.classList.add('visible');
+  }
+
+  S.reportHtml   = result.html || '';
+  S.teamReports  = result.teamReports || [];
+
+  var card = document.getElementById('resultCard');
+  card.classList.add('visible');
+
+  document.getElementById('resultMeta').textContent =
+    S.teamReports.length + ' team report(s) · ' + S.sprint +
+    ' · ' + S.assignees.length + ' member(s) included';
+
+  var listEl = document.getElementById('teamReportList');
+  listEl.innerHTML = '';
+  S.teamReports.forEach(function(r) {
+    var row = document.createElement('div');
+    row.className = 'team-report-row';
+
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'team-name';
+    nameSpan.textContent = '👥 ' + r.team;
+
+    var htmlBtn = document.createElement('button');
+    htmlBtn.className = 'result-link html';
+    htmlBtn.textContent = '🌐 HTML Report';
+    htmlBtn.addEventListener('click', function() { window.open(r.htmlUrl, '_blank'); });
+
+    var docBtn = document.createElement('button');
+    docBtn.className = 'result-link doc';
+    docBtn.textContent = '📄 Google Doc';
+    docBtn.addEventListener('click', function() { window.open(r.docUrl, '_blank'); });
+
+    row.appendChild(nameSpan);
+    row.appendChild(htmlBtn);
+    row.appendChild(docBtn);
+    listEl.appendChild(row);
+  });
+}
+
+function togglePreview(btn) {
+  var panel = document.getElementById('previewPanel');
+  if (panel.classList.contains('visible')) {
+    panel.classList.remove('visible');
+    btn.textContent = '👁 Preview combined report';
+  } else {
+    document.getElementById('previewFrame').srcdoc = S.reportHtml;
+    panel.classList.add('visible');
+    btn.textContent = '✕ Hide preview';
+  }
+}
+
+// ── Utilities ───────────────────────────────────────────────
+function makeChip(label, cls, handler) {
+  var chip = document.createElement('div');
+  chip.className = 'chip ' + cls;
+  chip.innerHTML = '<div class="dot"></div>' + esc(label);
+  chip.dataset.value = label;
+  chip.onclick = function() { handler(label, chip); };
+  return chip;
+}
+
+function toggleItem(name, el, arr) {
+  var idx = arr.indexOf(name);
+  if (idx === -1) { arr.push(name); el.classList.add('selected'); }
+  else            { arr.splice(idx, 1); el.classList.remove('selected'); }
+}
+
+function resetAll() { location.reload(); }
+
+function resetFrom(stepNum) {
+  if (stepNum <= 3) {
+    var sp = document.getElementById('sprintSelect');
+    sp.innerHTML = '<option value="">— select a sheet tab first —</option>';
+    sp.disabled = true;
+    S.sprint = '';
+  }
+  if (stepNum <= 4) {
+    document.getElementById('teamGrid').innerHTML = '<span class="empty-hint">Select a sprint first</span>';
+    document.getElementById('teamToggleBtn').textContent = 'Select all';
+    S.teams = [];
+  }
+  if (stepNum <= 6) { clearMembers(); }
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('selSummary').style.display = 'none';
+  document.getElementById('resultCard').classList.remove('visible');
+  hideErr('genError');
+  hideErr('genWarning');
+  for (var i = stepNum; i <= 7; i++) {
+    unDone(i);
+    if (i > stepNum) setInactive(i);
+  }
+}
+
+function setActive(n)   { var e = el(n); e.classList.remove('done'); e.classList.add('active'); }
+function setInactive(n) { var e = el(n); e.classList.remove('active', 'done'); }
+function markDone(n)    { var e = el(n); e.classList.remove('active'); e.classList.add('done'); }
+function unDone(n)      { var e = el(n); e.classList.remove('done', 'active'); }
+function el(n)          { return document.getElementById('step' + n); }
+
+function loader(id, on) { document.getElementById(id).classList.toggle('visible', on); }
+function showErr(id, msg) { var e = document.getElementById(id); e.textContent = '⚠️ ' + msg; e.classList.add('visible'); }
+function hideErr(id) { document.getElementById(id).classList.remove('visible'); }
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
