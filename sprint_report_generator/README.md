@@ -47,7 +47,7 @@ links to it.
    requests and check the counts.
 5. **Deploy → Manage deployments → Edit → New version** to keep the same URL.
 
-**Backlog** = open RTB items (excluding Sub-task, Test, Initiative, Epic and
-QA/UAT defects) not in an active sprint and not Done.
-**Groomed** = the same set with `status = 10006`. Adjust `BACKLOG_JQL` /
+**Backlog** = open RTB items in `status = 10006` (excluding Sub-task, Test,
+Initiative, Epic and QA/UAT defects) not in an active sprint.
+**Groomed** = the same set with `labels = "RTB-Groomed"`. Adjust `BACKLOG_JQL` /
 `GROOMED_CLAUSE` in `Code.gs` if your workflow differs.

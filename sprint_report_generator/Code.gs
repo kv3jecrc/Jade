@@ -74,18 +74,19 @@ var JIRA_TEAM_IDS = {
   // "Case Management":   "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-354",
 };
 
-// Backlog = open RTB work items not in an active sprint and not Done.
-// This is your JQL with the duplicated clauses merged; {TEAM_ID} is filled per team.
+// Backlog = your original JQL (duplicated clauses merged): open RTB work items
+// in status 10006, not in an active sprint. {TEAM_ID} is filled per team.
 var BACKLOG_JQL =
   'project = RTB' +
   ' AND issuetype not in (Sub-task, Test, Initiative, Epic)' +
   ' AND (labels not in (QA_Defect, UAT_Defect) OR labels is EMPTY)' +
   ' AND (Sprint not in openSprints() OR Sprint is EMPTY)' +
   ' AND status not in (Done)' +
+  ' AND status = 10006' +
   ' AND Team = "{TEAM_ID}"';
 
-// Groomed = the backlog above, narrowed to status 10006.
-var GROOMED_CLAUSE = 'status = 10006';
+// Groomed = the backlog above, narrowed to tickets labelled RTB-Groomed.
+var GROOMED_CLAUSE = 'labels = "RTB-Groomed"';
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile("Index")
